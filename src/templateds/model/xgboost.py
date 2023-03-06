@@ -1,0 +1,1 @@
+"""Base XGBoost model class."""
