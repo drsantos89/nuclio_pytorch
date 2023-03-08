@@ -41,7 +41,7 @@ def main(epochs: int = 5) -> None:
     for epoch in range(epochs):
         model.train()
         loss_sum = 0
-        for batch_idx, (data, target) in enumerate(train_loader): # noqa: B007
+        for batch_idx, (data, target) in enumerate(train_loader):  # noqa: B007
             data = data.reshape(-1, 28 * 28).to(device)
             target = target.to(device)
 
@@ -61,7 +61,7 @@ def main(epochs: int = 5) -> None:
         model.eval()
         loss_sum = 0
         with torch.no_grad():
-            for batch_idx, (data, target) in enumerate(test_loader): # noqa: B007
+            for batch_idx, (data, target) in enumerate(test_loader):  # noqa: B007
                 data = data.reshape(-1, 28 * 28).to(device)
                 target = target.to(device)
                 output = model(data)
