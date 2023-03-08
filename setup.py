@@ -6,7 +6,7 @@ VERSION = "0.0.0"
 DESCRIPTION = "My template for data science projects"
 
 setup(
-    name="templateds",
+    name="nucliopytorch",
     version=VERSION,
     description=DESCRIPTION,
     author="Diogo Santos",
