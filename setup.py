@@ -1,9 +1,9 @@
-"""Setup file for <templateds>."""
+"""Setup file for nucliopytorch."""
 from setuptools import find_packages, setup
 
-VERSION = "0.0.0"
+VERSION = "0.0.1"
 
-DESCRIPTION = "My template for data science projects"
+DESCRIPTION = "Pytorch examples for nuclio."
 
 setup(
     name="nucliopytorch",
@@ -13,7 +13,7 @@ setup(
     author_email="drsantos989@gmail.com",
     packages=find_packages("src"),
     package_dir={"": "src"},
-    install_requires=[],
+    install_requires=["torch"],
     extras_require={
         "dev": [
             "isort",
