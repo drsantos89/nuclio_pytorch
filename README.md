@@ -1,3 +1,23 @@
+# PyTorch examples for Nuclio Digital School
+
+This repository contains examples of PyTorch models for the Nuclio Digital School.
+
+[![Python Linters and Tests](https://github.com/drsantos89/nuclio_pytorch/actions/workflows/ci.yaml/badge.svg)](https://github.com/drsantos89/nuclio_pytorch/actions/workflows/ci.yaml)
+
+## For developers
+
+```bash
+pip install -e .[dev]
+```
+
+## Example
+```bash
+python src/nucliopytorch/run__ff.py
+```
+
+# ORIGNIAL TEMPLATE README
+https://github.com/drsantos89/template-ds-ds
+
 # Install [Conda](https://docs.conda.io/en/latest/)
 
 I recommend installing Conda [Miniforge](https://github.com/conda-forge/miniforge) to handle virtual environments.
