@@ -14,7 +14,7 @@ random.seed(42)
 torch.manual_seed(42)
 
 
-def objective(trial: optuna.trial.Trial) -> None:
+def objective(trial: optuna.trial.Trial) -> float:
     """Run main function."""
     train_dataset, test_dataset = download_data()
 
@@ -42,7 +42,7 @@ def objective(trial: optuna.trial.Trial) -> None:
     best_model: float = 9.0
     best_model_patience: int = 0
 
-    for epoch in range(5):
+    for epoch in range(1):
         model.train()
         loss_sum = 0
         for batch_idx, (data, target) in enumerate(train_loader):  # noqa: B007
@@ -92,6 +92,8 @@ def objective(trial: optuna.trial.Trial) -> None:
 
         with open(f"./results/{trial.study.study_name}_{trial.number}.json", "w") as f:
             json.dump([trial.params, train_loss, test_loss], f)
+
+    return loss_sum / batch_idx
 
 
 if __name__ == "__main__":
