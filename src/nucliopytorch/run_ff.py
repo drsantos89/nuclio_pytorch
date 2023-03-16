@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from nucliopytorch.load.get_data import download_data, get_data_loader
+from nucliopytorch.load.get_data import download_data_fashion, get_data_loader
 from nucliopytorch.model.pytorch_ff import TorchFF
 
 np.random.seed(42)
@@ -15,7 +15,7 @@ torch.manual_seed(42)
 
 def main(epochs: int = 5) -> None:
     """Run main function."""
-    train_dataset, test_dataset = download_data()
+    train_dataset, test_dataset = download_data_fashion()
 
     train_loader = get_data_loader(train_dataset, 100, True)
 
