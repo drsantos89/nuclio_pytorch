@@ -6,7 +6,7 @@ import numpy as np
 import torch
 
 from nucliopytorch.load.get_data import download_data_fashion, get_data_loader
-from nucliopytorch.model.pytorch_ff import TorchFF
+from nucliopytorch.model.pytorch_cnn import get_efficientnet
 
 np.random.seed(42)
 random.seed(42)
@@ -21,11 +21,7 @@ def main(epochs: int = 5) -> None:
 
     test_loader = get_data_loader(test_dataset, 100, False)
 
-    model = TorchFF(
-        input_size=784,
-        hidden_size=64,
-        output_size=10,
-    )
+    model = get_efficientnet()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -37,12 +33,14 @@ def main(epochs: int = 5) -> None:
 
     train_loss = []
     test_loss = []
+    best_model: float = 9.0
+    best_model_patience: int = 0
 
     for epoch in range(epochs):
         model.train()
         loss_sum = 0
         for batch_idx, (data, target) in enumerate(train_loader):  # noqa: B007
-            data = data.reshape(-1, 28 * 28).to(device)
+            data = data.to(device)
             target = target.to(device)
 
             optimizer.zero_grad()
@@ -62,7 +60,7 @@ def main(epochs: int = 5) -> None:
         loss_sum = 0
         with torch.no_grad():
             for batch_idx, (data, target) in enumerate(test_loader):  # noqa: B007
-                data = data.reshape(-1, 28 * 28).to(device)
+                data = data.to(device)
                 target = target.to(device)
                 output = model(data)
                 loss = loss_fn(output, target)
@@ -70,6 +68,14 @@ def main(epochs: int = 5) -> None:
                 _, predicted = torch.max(output.data, 1)
                 accuracy = (predicted == target).sum().item() / target.size(0)
         scheduler.step(loss_sum / batch_idx)
+        if loss_sum / batch_idx < best_model:
+            best_model = loss_sum / batch_idx
+            torch.save(model.state_dict(), "./results/best_model.pt")
+            best_model_patience = 0
+        else:
+            best_model_patience += 1
+            if best_model_patience > 4:
+                break
         print(
             f"Test -> Epoch: {epoch}, Loss: {loss_sum/batch_idx}, Accuracy: {accuracy}"
         )
