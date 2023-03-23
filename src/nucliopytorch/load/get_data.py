@@ -1,6 +1,8 @@
 """Get data."""
 from typing import Any
 
+import datasets
+import pandas as pd
 import torch
 import torchvision
 
@@ -45,3 +47,12 @@ def get_data_loader(
         batch_size=batch_size,
         shuffle=shuffle,
     )
+
+
+def get_wikipedia() -> pd.DataFrame:
+    """Get wikipedia data."""
+    # load Wikipedia data form HuggingFace datasets
+    data = datasets.load_dataset("wikipedia", "20220301.simple")
+    # select only first 10,000 articles and convert to pandas DataFrame
+    data = pd.DataFrame(data["train"][:10000])
+    return data
